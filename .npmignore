@@ -1,6 +1,10 @@
 /node_modules/
 /test/
+/source/
+/target/build/test
+/tmp/
 /package-lock.json
+/tsconfig.json
 /*.tgz
 *.swp
 *.swo
