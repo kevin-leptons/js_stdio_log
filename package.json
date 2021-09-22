@@ -1,6 +1,6 @@
 {
   "name": "stdio_log",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Simple log to stdio for Javascript",
   "main": "lib/index.js",
   "scripts": {
