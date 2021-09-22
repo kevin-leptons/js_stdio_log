@@ -1,9 +1,9 @@
 'use strict'
 
-import assert from 'assert'
-import capture_console from 'capture-console'
-import MockDate from 'mockdate'
-import log from '../lib'
+const assert = require('assert')
+const capture_console = require('capture-console')
+const MockDate = require('mockdate')
+const log = require('../lib')
 
 describe('log._format_datetime_string', () => {
     it('2021-09-02 01:03:04', () => {
@@ -73,15 +73,15 @@ describe('log._write_stdout', () => {
     it('with three arguments', () => {
         let output = capture_console.captureStdout({quiet: true}, () => {
             log._write_stdout(
-                '_PREFIX_', 
-                '1st_argument', 
-                '2nd_argument', 
+                '_PREFIX_',
+                '1st_argument',
+                '2nd_argument',
                 '3rd_argument'
             )
         })
 
         assert.strictEqual(
-            output, 
+            output,
             '_PREFIX_ 2021-01-02 03:04:05 - 1st_argument 2nd_argument 3rd_argument\n'
         )
     })
@@ -125,15 +125,15 @@ describe('log._write_stderr', () => {
     it('with three arguments', () => {
         let output = capture_console.captureStderr({quiet: true}, () => {
             log._write_stderr(
-                '_PREFIX_', 
-                '1st_argument', 
-                '2nd_argument', 
+                '_PREFIX_',
+                '1st_argument',
+                '2nd_argument',
                 '3rd_argument'
             )
         })
 
         assert.strictEqual(
-            output, 
+            output,
             '_PREFIX_ 2022-01-02 07:04:05 - 1st_argument 2nd_argument 3rd_argument\n'
         )
     })
@@ -238,7 +238,7 @@ describe('mixed log', () => {
             log.error('error message')
         })
         let actualResult = output.stdout + output.stderr
-        let expectedResult = 
+        let expectedResult =
             'INFO  2024-02-08 09:06:09 - info message\n' +
             'DEBUG 2024-02-08 09:06:09 - debug message\n' +
             'WARN  2024-02-08 09:06:09 - warn message\n' +

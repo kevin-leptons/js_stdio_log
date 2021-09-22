@@ -1,11 +1,10 @@
 {
   "name": "stdio_log",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Simple log to stdio for Javascript",
-  "main": "target/build/lib/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "compile": "tsc --project tsconfig.json",
-    "test": "npm run compile && npx mocha target/build/test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -25,11 +24,8 @@
   },
   "homepage": "https://github.com/kevin-leptons/js_stdio_log#readme",
   "devDependencies": {
-    "@types/capture-console": "^1.0.1",
-    "@types/mocha": "^9.0.0",
     "capture-console": "^1.0.1",
     "mocha": "^9.1.0",
-    "mockdate": "^3.0.5",
-    "typescript": "^4.4.2"
+    "mockdate": "^3.0.5"
   }
 }
