@@ -11,22 +11,17 @@
 ```js
 const log = requrie('stdio_log')
 
-// Write mesages to stdout.
 log.info(...messages)
-
-// Write mesages to stdout.
 log.debug(...messages)
-
-// Write mesages to stdout.
 log.warn(...messages)
-
-// Write mesages to stderr.
 log.error(...messages)
+log.write(log.Level.DEBUG, ...message)
 ```
 
 ## Development
 
 ```js
 npm install
+npm run standardize
 npm test
 ```

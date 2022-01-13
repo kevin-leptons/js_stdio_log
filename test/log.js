@@ -1,237 +1,209 @@
 'use strict'
 
+/* eslint-disable max-lines-per-function */
+
 const assert = require('assert')
-const capture_console = require('capture-console')
+const captureConsole = require('capture-console')
 const MockDate = require('mockdate')
 const log = require('../lib')
+const {
+    formatDateTimeString,
+    dateTimeNow,
+    writeStdout,
+    writeStdError
+} = require('../lib')._private
 
-describe('log._format_datetime_string', () => {
+describe('log.formatDateTimeString', () => {
     it('2021-09-02 01:03:04', () => {
         let expectedResult = '2021-09-02 01:03:04'
-        let actualResult = log._format_datetime_string(
+        let actualResult = formatDateTimeString(
             new Date(expectedResult)
         )
-
         assert.strictEqual(actualResult, expectedResult)
     })
 })
-
-describe('log._get_datetime_string_now', () => {
+describe('dateTimeNow', () => {
     before(() => {
         MockDate.set(
             new Date('2021-01-02 03:04:06')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
     it('return correct value', () => {
-        let actualResult = log._get_datetime_string_now()
+        let actualResult = dateTimeNow()
         let expectedResult = '2021-01-02 03:04:06'
-
         assert.strictEqual(actualResult, expectedResult)
     })
 })
-
-describe('log._write_stdout', () => {
+describe('writeStdout', () => {
     before(() => {
         MockDate.set(
             new Date('2021-01-02 03:04:05')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
-    it('with no argument', () => {
-        let output = capture_console.captureStdout({quiet: true}, () => {
-            log._write_stdout('_PREFIX_')
+    it('with no messages', () => {
+        let output = captureConsole.captureStdout(() => {
+            writeStdout(log.Level.INFO)
         })
-
-        assert.strictEqual(output, '_PREFIX_ 2021-01-02 03:04:05 -\n')
+        assert.strictEqual(output, 'INFO  2021-01-02 03:04:05 -\n')
     })
-
-    it('with an argument', () => {
-        let output = capture_console.captureStdout({quiet: true}, () => {
-            log._write_stdout('_PREFIX_', 'arguument 1st')
+    it('with a message', () => {
+        let output = captureConsole.captureStdout(() => {
+            writeStdout(log.Level.INFO, 'arguument 1st')
         })
-
-        assert.strictEqual(output, '_PREFIX_ 2021-01-02 03:04:05 - arguument 1st\n')
+        assert.strictEqual(
+            output, 'INFO  2021-01-02 03:04:05 - arguument 1st\n'
+        )
     })
-
-    it('with two arguments', () => {
-        let output = capture_console.captureStdout({quiet: true}, () => {
-            log._write_stdout('_PREFIX_', '1st_argument', '2nd_argument')
+    it('with two messages', () => {
+        let output = captureConsole.captureStdout(() => {
+            writeStdout(log.Level.INFO, '1st_arg', '2nd_arg')
         })
-
-        assert.strictEqual(output, '_PREFIX_ 2021-01-02 03:04:05 - 1st_argument 2nd_argument\n')
+        assert.strictEqual(
+            output, 'INFO  2021-01-02 03:04:05 - 1st_arg 2nd_arg\n'
+        )
     })
-
-    it('with three arguments', () => {
-        let output = capture_console.captureStdout({quiet: true}, () => {
-            log._write_stdout(
-                '_PREFIX_',
-                '1st_argument',
-                '2nd_argument',
-                '3rd_argument'
+    it('with three messages', () => {
+        let output = captureConsole.captureStdout(() => {
+            writeStdout(
+                log.Level.INFO,
+                '1st_arg',
+                '2nd_arg',
+                '3rd_arg'
             )
         })
-
         assert.strictEqual(
             output,
-            '_PREFIX_ 2021-01-02 03:04:05 - 1st_argument 2nd_argument 3rd_argument\n'
+            'INFO  2021-01-02 03:04:05 - 1st_arg 2nd_arg 3rd_arg\n'
         )
     })
 })
-
-describe('log._write_stderr', () => {
+describe('writeStdError', () => {
     before(() => {
         MockDate.set(
             new Date('2022-01-02 07:04:05')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
-    it('with no argument', () => {
-        let output = capture_console.captureStderr({quiet: true}, () => {
-            log._write_stderr('_PREFIX_')
+    it('with no arg', () => {
+        let output = captureConsole.captureStderr(() => {
+            writeStdError(log.Level.INFO)
         })
-
-        assert.strictEqual(output, '_PREFIX_ 2022-01-02 07:04:05 -\n')
+        assert.strictEqual(output, 'INFO  2022-01-02 07:04:05 -\n')
     })
-
-    it('with an argument', () => {
-        let output = capture_console.captureStderr({quiet: true}, () => {
-            log._write_stderr('_PREFIX_', 'arguument 1st')
+    it('with an message', () => {
+        let output = captureConsole.captureStderr(() => {
+            writeStdError(log.Level.INFO, 'arguument 1st')
         })
-
-        assert.strictEqual(output, '_PREFIX_ 2022-01-02 07:04:05 - arguument 1st\n')
+        assert.strictEqual(
+            output, 'INFO  2022-01-02 07:04:05 - arguument 1st\n'
+        )
     })
-
-    it('with two arguments', () => {
-        let output = capture_console.captureStderr({quiet: true}, () => {
-            log._write_stderr('_PREFIX_', '1st_argument', '2nd_argument')
+    it('with two messages', () => {
+        let output = captureConsole.captureStderr(() => {
+            writeStdError(log.Level.INFO, '1st_arg', '2nd_arg')
         })
-
-        assert.strictEqual(output, '_PREFIX_ 2022-01-02 07:04:05 - 1st_argument 2nd_argument\n')
+        assert.strictEqual(
+            output, 'INFO  2022-01-02 07:04:05 - 1st_arg 2nd_arg\n'
+        )
     })
-
-    it('with three arguments', () => {
-        let output = capture_console.captureStderr({quiet: true}, () => {
-            log._write_stderr(
-                '_PREFIX_',
-                '1st_argument',
-                '2nd_argument',
-                '3rd_argument'
+    it('with three messages', () => {
+        let output = captureConsole.captureStderr(() => {
+            writeStdError(
+                log.Level.INFO,
+                '1st_arg',
+                '2nd_arg',
+                '3rd_arg'
             )
         })
-
         assert.strictEqual(
             output,
-            '_PREFIX_ 2022-01-02 07:04:05 - 1st_argument 2nd_argument 3rd_argument\n'
+            'INFO  2022-01-02 07:04:05 - 1st_arg 2nd_arg 3rd_arg\n'
         )
     })
 })
-
 describe('log.info', () => {
     before(() => {
         MockDate.set(
             new Date('2022-03-04 07:04:09')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
     it('should write to stdout', () => {
-        let output = capture_console.captureStdout({quiet: true}, () => {
+        let output = captureConsole.captureStdout(() => {
             log.info('a message')
         })
-
         assert.strictEqual(output, 'INFO  2022-03-04 07:04:09 - a message\n')
     })
 })
-
 describe('log.debug', () => {
     before(() => {
         MockDate.set(
             new Date('2022-03-04 08:04:09')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
     it('should write to stdout', () => {
-        let output = capture_console.captureStdout({quiet: true}, () => {
+        let output = captureConsole.captureStdout(() => {
             log.debug('a message')
         })
-
         assert.strictEqual(output, 'DEBUG 2022-03-04 08:04:09 - a message\n')
     })
 })
-
 describe('log.warn', () => {
     before(() => {
         MockDate.set(
             new Date('2022-02-08 08:04:09')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
     it('should write to stdout', () => {
-        let output = capture_console.captureStdout({quiet: true}, () => {
+        let output = captureConsole.captureStdout(() => {
             log.warn('a message')
         })
-
         assert.strictEqual(output, 'WARN  2022-02-08 08:04:09 - a message\n')
     })
 })
-
 describe('log.error', () => {
     before(() => {
         MockDate.set(
             new Date('2023-02-08 09:05:09')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
     it('should write to stderr', () => {
-        let output = capture_console.captureStderr({quiet: true}, () => {
+        let output = captureConsole.captureStderr(() => {
             log.error('a message')
         })
-
         assert.strictEqual(output, 'ERROR 2023-02-08 09:05:09 - a message\n')
     })
 })
-
 describe('mixed log', () => {
     before(() => {
         MockDate.set(
             new Date('2024-02-08 09:06:09')
         )
     })
-
     after(() => {
         MockDate.reset()
     })
-
     it('write correct value to stdio', () => {
-        let output = capture_console.captureStdio({quiet: true}, () => {
+        let output = captureConsole.captureStdio(() => {
             log.info('info message')
             log.debug('debug message')
             log.warn('warn message')
@@ -243,8 +215,6 @@ describe('mixed log', () => {
             'DEBUG 2024-02-08 09:06:09 - debug message\n' +
             'WARN  2024-02-08 09:06:09 - warn message\n' +
             'ERROR 2024-02-08 09:06:09 - error message\n'
-
-
         assert.strictEqual(actualResult, expectedResult)
     })
 })
