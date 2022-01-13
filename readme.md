@@ -9,13 +9,14 @@
 ## APIs
 
 ```js
-const log = requrie('stdio_log')
+const {Log, Level} = requrie('stdio_log')
 
-log.info(...messages)
-log.debug(...messages)
-log.warn(...messages)
-log.error(...messages)
-log.write(log.Level.DEBUG, ...message)
+let log = new Log(Level.ERROR)
+log.info('one', 'two')
+log.debug('three', 'four')
+log.warn('five')
+log.error('six')
+log.write(Level.INFO, 'seven', 'eight')
 ```
 
 ## Development
