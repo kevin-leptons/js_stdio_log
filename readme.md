@@ -8,15 +8,24 @@
 
 ## APIs
 
-```js
-const {Log, Level} = requrie('stdio_log')
+**Use Directly**
 
-let log = new Log(Level.ERROR)
+```js
+const {log} = requrie('stdio_log')
+
 log.info('one', 'two')
 log.debug('three', 'four')
 log.warn('five')
 log.error('six')
 log.write(Level.INFO, 'seven', 'eight')
+```
+
+**Create New Instance**
+
+```js
+const {Log, Level} = requrie('stdio_log')
+
+let log = new Log(Level.INFO)
 ```
 
 ## Development
