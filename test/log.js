@@ -130,7 +130,7 @@ describe('writeStdErr', () => {
     })
 })
 describe('Log', () => {
-    let log = new Log(Level.ERROR)
+    let log = new Log(Level.INFO)
     beforeEach(() => {
         MockDate.reset()
     })
@@ -173,30 +173,28 @@ describe('Log', () => {
         })
         assert.strictEqual(output, 'ERROR 2023-02-08 09:05:09 - a message\n')
     })
-    describe('info, debug, warn, error', () => {
-        it('write correct value to stdio', () => {
-            MockDate.set(
-                new Date('2024-02-08 09:06:09')
-            )
-            let output = captureConsole.captureStdio(() => {
-                log.info('info message')
-                log.debug('debug message')
-                log.warn('warn message')
-                log.error('error message')
-            })
-            let actualResult = output.stdout + output.stderr
-            let expectedResult =
-                'INFO  2024-02-08 09:06:09 - info message\n' +
-                'DEBUG 2024-02-08 09:06:09 - debug message\n' +
-                'WARN  2024-02-08 09:06:09 - warn message\n' +
-                'ERROR 2024-02-08 09:06:09 - error message\n'
-            assert.strictEqual(actualResult, expectedResult)
+    it('info, debug, warn, error', () => {
+        MockDate.set(
+            new Date('2024-02-08 09:06:09')
+        )
+        let output = captureConsole.captureStdio(() => {
+            log.info('info message')
+            log.debug('debug message')
+            log.warn('warn message')
+            log.error('error message')
         })
+        let actualResult = output.stdout + output.stderr
+        let expectedResult =
+            'INFO  2024-02-08 09:06:09 - info message\n' +
+            'DEBUG 2024-02-08 09:06:09 - debug message\n' +
+            'WARN  2024-02-08 09:06:09 - warn message\n' +
+            'ERROR 2024-02-08 09:06:09 - error message\n'
+        assert.strictEqual(actualResult, expectedResult)
     })
-    describe('do not write log out of level', () => {
-        let infoLog = new Log(Level.INFO)
+    it('do not write log out of level', () => {
+        let infoLog = new Log(Level.ERROR)
         let output = captureConsole.captureStderr(() => {
-            infoLog.error('a message')
+            infoLog.warn('a message')
         })
         assert.strictEqual(output, '')
     })
