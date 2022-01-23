@@ -15,17 +15,16 @@ const {
 
 describe('log.formatDateTimeString', () => {
     it('2021-09-02 01:03:04', () => {
+        let input = new Date('2021-09-02 01:03:04 UTC')
         let expectedResult = '2021-09-02 01:03:04'
-        let actualResult = formatDateTimeString(
-            new Date(expectedResult)
-        )
+        let actualResult = formatDateTimeString(input)
         assert.strictEqual(actualResult, expectedResult)
     })
 })
 describe('dateTimeNow', () => {
     before(() => {
         MockDate.set(
-            new Date('2021-01-02 03:04:06')
+            new Date('2021-01-02 03:04:06 UTC')
         )
     })
     after(() => {
@@ -40,7 +39,7 @@ describe('dateTimeNow', () => {
 describe('writeStdout', () => {
     before(() => {
         MockDate.set(
-            new Date('2021-01-02 03:04:05')
+            new Date('2021-01-02 03:04:05 UTC')
         )
     })
     after(() => {
@@ -86,7 +85,7 @@ describe('writeStdout', () => {
 describe('writeStdErr', () => {
     before(() => {
         MockDate.set(
-            new Date('2022-01-02 07:04:05')
+            new Date('2022-01-02 07:04:05 UTC')
         )
     })
     after(() => {
@@ -139,7 +138,7 @@ describe('Log', () => {
     })
     it('info, write data to stdout', () => {
         MockDate.set(
-            new Date('2022-03-04 07:04:09')
+            new Date('2022-03-04 07:04:09 UTC')
         )
         let output = captureConsole.captureStdout(() => {
             log.info('a message')
@@ -148,7 +147,7 @@ describe('Log', () => {
     })
     it('debug, write data to stdout', () => {
         MockDate.set(
-            new Date('2022-03-04 08:04:09')
+            new Date('2022-03-04 08:04:09 UTC')
         )
         let output = captureConsole.captureStdout(() => {
             log.debug('a message')
@@ -157,7 +156,7 @@ describe('Log', () => {
     })
     it('warn, write data to stdout', () => {
         MockDate.set(
-            new Date('2022-02-08 08:04:09')
+            new Date('2022-02-08 08:04:09 UTC')
         )
         let output = captureConsole.captureStdout(() => {
             log.warn('a message')
@@ -166,7 +165,7 @@ describe('Log', () => {
     })
     it('error, write data to stderr', () => {
         MockDate.set(
-            new Date('2023-02-08 09:05:09')
+            new Date('2023-02-08 09:05:09 UTC')
         )
         let output = captureConsole.captureStderr(() => {
             log.error('a message')
@@ -175,7 +174,7 @@ describe('Log', () => {
     })
     it('info, debug, warn, error', () => {
         MockDate.set(
-            new Date('2024-02-08 09:06:09')
+            new Date('2024-02-08 09:06:09 UTC')
         )
         let output = captureConsole.captureStdio(() => {
             log.info('info message')
