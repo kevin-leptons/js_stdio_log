@@ -47,30 +47,31 @@ describe('writeStdout', () => {
     })
     it('with no messages', () => {
         let output = captureConsole.captureStdout(() => {
-            writeStdout(Level.INFO)
+            writeStdout(Level.INFO, 'a_tag')
         })
-        assert.strictEqual(output, 'INFO  2021-01-02 03:04:05 -\n')
+        assert.strictEqual(output, 'INFO  2021-01-02 03:04:05 a_tag -\n')
     })
     it('with a message', () => {
         let output = captureConsole.captureStdout(() => {
-            writeStdout(Level.INFO, 'arguument 1st')
+            writeStdout(Level.INFO, 'a_tag', 'arguument 1st')
         })
         assert.strictEqual(
-            output, 'INFO  2021-01-02 03:04:05 - arguument 1st\n'
+            output, 'INFO  2021-01-02 03:04:05 a_tag - arguument 1st\n'
         )
     })
     it('with two messages', () => {
         let output = captureConsole.captureStdout(() => {
-            writeStdout(Level.INFO, '1st_arg', '2nd_arg')
+            writeStdout(Level.INFO, 'a_tag', '1st_arg', '2nd_arg')
         })
         assert.strictEqual(
-            output, 'INFO  2021-01-02 03:04:05 - 1st_arg 2nd_arg\n'
+            output, 'INFO  2021-01-02 03:04:05 a_tag - 1st_arg 2nd_arg\n'
         )
     })
     it('with three messages', () => {
         let output = captureConsole.captureStdout(() => {
             writeStdout(
                 Level.INFO,
+                'a_tag',
                 '1st_arg',
                 '2nd_arg',
                 '3rd_arg'
@@ -78,7 +79,7 @@ describe('writeStdout', () => {
         })
         assert.strictEqual(
             output,
-            'INFO  2021-01-02 03:04:05 - 1st_arg 2nd_arg 3rd_arg\n'
+            'INFO  2021-01-02 03:04:05 a_tag - 1st_arg 2nd_arg 3rd_arg\n'
         )
     })
 })
@@ -93,30 +94,31 @@ describe('writeStdErr', () => {
     })
     it('with no arg', () => {
         let output = captureConsole.captureStderr(() => {
-            writeStdErr(Level.INFO)
+            writeStdErr(Level.INFO, 'a_tag')
         })
-        assert.strictEqual(output, 'INFO  2022-01-02 07:04:05 -\n')
+        assert.strictEqual(output, 'INFO  2022-01-02 07:04:05 a_tag -\n')
     })
     it('with an message', () => {
         let output = captureConsole.captureStderr(() => {
-            writeStdErr(Level.INFO, 'arguument 1st')
+            writeStdErr(Level.INFO, 'a_tag', 'arguument 1st')
         })
         assert.strictEqual(
-            output, 'INFO  2022-01-02 07:04:05 - arguument 1st\n'
+            output, 'INFO  2022-01-02 07:04:05 a_tag - arguument 1st\n'
         )
     })
     it('with two messages', () => {
         let output = captureConsole.captureStderr(() => {
-            writeStdErr(Level.INFO, '1st_arg', '2nd_arg')
+            writeStdErr(Level.INFO, 'a_tag', '1st_arg', '2nd_arg')
         })
         assert.strictEqual(
-            output, 'INFO  2022-01-02 07:04:05 - 1st_arg 2nd_arg\n'
+            output, 'INFO  2022-01-02 07:04:05 a_tag - 1st_arg 2nd_arg\n'
         )
     })
     it('with three messages', () => {
         let output = captureConsole.captureStderr(() => {
             writeStdErr(
                 Level.INFO,
+                'a_tag',
                 '1st_arg',
                 '2nd_arg',
                 '3rd_arg'
@@ -124,7 +126,7 @@ describe('writeStdErr', () => {
         })
         assert.strictEqual(
             output,
-            'INFO  2022-01-02 07:04:05 - 1st_arg 2nd_arg 3rd_arg\n'
+            'INFO  2022-01-02 07:04:05 a_tag - 1st_arg 2nd_arg 3rd_arg\n'
         )
     })
 })
@@ -136,6 +138,18 @@ describe('Log', () => {
     after(() => {
         MockDate.reset()
     })
+    it('create, return instance and write message', () => {
+        MockDate.set(
+            new Date('2022-12-01 21:04:01 UTC')
+        )
+        let newLog = Log.create({tag: 'foo.bar'})
+        let output = captureConsole.captureStdout(() => {
+            newLog.info('a message')
+        })
+        assert.strictEqual(
+            output, 'INFO  2022-12-01 21:04:01 foo.bar - a message\n'
+        )
+    })
     it('info, write data to stdout', () => {
         MockDate.set(
             new Date('2022-03-04 07:04:09 UTC')
@@ -143,7 +157,9 @@ describe('Log', () => {
         let output = captureConsole.captureStdout(() => {
             log.info('a message')
         })
-        assert.strictEqual(output, 'INFO  2022-03-04 07:04:09 - a message\n')
+        assert.strictEqual(
+            output, 'INFO  2022-03-04 07:04:09 main - a message\n'
+        )
     })
     it('debug, write data to stdout', () => {
         MockDate.set(
@@ -152,7 +168,9 @@ describe('Log', () => {
         let output = captureConsole.captureStdout(() => {
             log.debug('a message')
         })
-        assert.strictEqual(output, 'DEBUG 2022-03-04 08:04:09 - a message\n')
+        assert.strictEqual(
+            output, 'DEBUG 2022-03-04 08:04:09 main - a message\n'
+        )
     })
     it('warn, write data to stdout', () => {
         MockDate.set(
@@ -161,7 +179,9 @@ describe('Log', () => {
         let output = captureConsole.captureStdout(() => {
             log.warn('a message')
         })
-        assert.strictEqual(output, 'WARN  2022-02-08 08:04:09 - a message\n')
+        assert.strictEqual(
+            output, 'WARN  2022-02-08 08:04:09 main - a message\n'
+        )
     })
     it('error, write data to stderr', () => {
         MockDate.set(
@@ -170,7 +190,9 @@ describe('Log', () => {
         let output = captureConsole.captureStderr(() => {
             log.error('a message')
         })
-        assert.strictEqual(output, 'ERROR 2023-02-08 09:05:09 - a message\n')
+        assert.strictEqual(
+            output, 'ERROR 2023-02-08 09:05:09 main - a message\n'
+        )
     })
     it('info, debug, warn, error', () => {
         MockDate.set(
@@ -184,10 +206,10 @@ describe('Log', () => {
         })
         let actualResult = output.stdout + output.stderr
         let expectedResult =
-            'INFO  2024-02-08 09:06:09 - info message\n' +
-            'DEBUG 2024-02-08 09:06:09 - debug message\n' +
-            'WARN  2024-02-08 09:06:09 - warn message\n' +
-            'ERROR 2024-02-08 09:06:09 - error message\n'
+            'INFO  2024-02-08 09:06:09 main - info message\n' +
+            'DEBUG 2024-02-08 09:06:09 main - debug message\n' +
+            'WARN  2024-02-08 09:06:09 main - warn message\n' +
+            'ERROR 2024-02-08 09:06:09 main - error message\n'
         assert.strictEqual(actualResult, expectedResult)
     })
     it('do not write log out of level', () => {

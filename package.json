@@ -1,33 +1,33 @@
 {
-  "name": "stdio_log",
-  "version": "0.10.0",
-  "description": "Simple log to stdio for Javascript",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "mocha",
-    "standardize": "palmito -i '**/tmp/**'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kevin-leptons/js_stdio_log.git"
-  },
-  "keywords": [
-    "simple",
-    "log",
-    "stdio",
-    "stdin",
-    "stdout"
-  ],
-  "author": "Kevin Leptons",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kevin-leptons/js_stdio_log/issues"
-  },
-  "homepage": "https://github.com/kevin-leptons/js_stdio_log#readme",
-  "devDependencies": {
-    "capture-console": "1.0.1",
-    "mocha": "9.1.0",
-    "mockdate": "3.0.5",
-    "palmito": "0.3.0"
-  }
+    "name": "stdio_log",
+    "version": "2.0.0",
+    "description": "Simple log to stdio for Javascript",
+    "main": "lib/index.js",
+    "scripts": {
+        "test": "mocha",
+        "standardize": "palmito -i '**/tmp/**'"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kevin-leptons/js_stdio_log.git"
+    },
+    "keywords": [
+        "simple",
+        "log",
+        "stdio",
+        "stdin",
+        "stdout"
+    ],
+    "author": "Kevin Leptons",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/kevin-leptons/js_stdio_log/issues"
+    },
+    "homepage": "https://github.com/kevin-leptons/js_stdio_log#readme",
+    "devDependencies": {
+        "capture-console": "1.0.1",
+        "mocha": "9.1.0",
+        "mockdate": "3.0.5",
+        "palmito": "0.3.0"
+    }
 }

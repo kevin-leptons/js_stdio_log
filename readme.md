@@ -25,11 +25,10 @@ log.write(Level.INFO, 'seven', 'eight')
 ```js
 const {Log, Level} = requrie('stdio_log')
 
-let log1 = new Log(Level.NONE)
-let log2 = new Log(Level.INFO)
-let log3 = new Log(Level.DEBUG)
-let log4 = new Log(Level.WARN)
-let log5 = new Log(Level.ERROR)
+let log = Log.create({
+    level: Level.INFO,
+    tag: 'foo.bar'
+})
 ```
 
 ## Development
