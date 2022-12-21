@@ -1,11 +1,12 @@
 {
     "name": "stdio_log",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Simple log to stdio for Javascript",
     "main": "lib/index.js",
     "scripts": {
         "test": "mocha",
-        "standardize": "palmito -i '**/tmp/**'"
+        "standardize": "palmito -i '**/tmp/**'",
+        "make_typescript_declaration": "tsc"
     },
     "repository": {
         "type": "git",
@@ -28,6 +29,7 @@
         "capture-console": "1.0.1",
         "mocha": "9.1.0",
         "mockdate": "3.0.5",
-        "palmito": "0.3.0"
+        "palmito": "0.3.0",
+        "typescript": "^4.9.4"
     }
 }

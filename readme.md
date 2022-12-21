@@ -37,4 +37,5 @@ let log = Log.create({
 npm install
 npm run standardize
 npm test
+npm run make_typescript_declaration
 ```
